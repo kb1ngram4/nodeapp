@@ -1,7 +1,8 @@
 const express = require('express')
-// const cors = require('cors')
+const cors = require('cors')
 const app = express()
-// app.use(cors())
+// let corsOptions = {origin:'*'}
+// app.use(cors(corsOptions))
 const port = 3000
 // post 请求
 // 中间件 body-parser
@@ -32,12 +33,21 @@ app.get('/',(req,res)=>{
 })
 
 // post请求 npm i body-parser --save
-
+// 查询数据
 app.post('/api/userInfo', urlencodedParser, (req,res)=>{
-    console.dir(req.body)
-    res.send({
-        code:200,
-        msg:'成功'
+    const {id,userName,age} = req.body
+    // 构建查询语句
+    let sql = 'select * from userTable'
+    db.query(sql,(error,results,fields)=>{
+        if(error){
+            return res.status(500).json({error:error.message})
+        }
+        const data = results
+        res.send({
+            code:200,
+            msg:'成功',
+            data
+        })
     })
 
 })
