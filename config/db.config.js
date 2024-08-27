@@ -1,8 +1,10 @@
+// 连接远程mysql数据库的登录参数
+// sequelize 的配置信息
 module.exports = {
-    HOST:'localhost',
-    USER:'root',
-    PASSWORD:'root',
-    DB:'mydatabase',
+    host:'localhost',
+    user:'root',
+    password:'root',
+    db:'mydatabase',
     dialect:'mysql',
     pool:{
         max:5, //池中最大连接数

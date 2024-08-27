@@ -1,10 +1,13 @@
+// 初始化 sequelize
+
 const dbConfig = require('../config/db.config.js')
 
 const Sequelize = require('sequelize')
-const sequelize = new Sequelize(dbConfig.DB,dbConfig.USER,dbConfig.PASSWORD,{
-    host:dbConfig.HOST,
+// 创建Sequelize实例
+const sequelize = new Sequelize(dbConfig.db,dbConfig.user,dbConfig.password,{
+    host:dbConfig.host,
     dialect:dbConfig.dialect,
-    operatorsAliases: false,
+    // operatorsAliases: false,
     pool:{
         max:dbConfig.pool.max,
         min:dbConfig.pool.min,
@@ -17,3 +20,8 @@ const db = {}
 
 db.Sequelize = Sequelize
 db.sequelize = sequelize
+
+
+db.userTable = require('./user.model.js')(sequelize,Sequelize)
+// db.userTable(sequelize,Sequelize)
+module.exports = db
