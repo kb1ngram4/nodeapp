@@ -2,7 +2,7 @@
 
 const db = require("../db")
 // 查询usertable
-exports.getUserInfo = (req,res)=>{
+exports.getUserList = (req,res)=>{
     const {username,age,role} = req.body
     let sql = `select * from userTable where username like'%${username}%'and age like '%${age}%' and role like '%${role}%'`
     console.dir(sql);
@@ -22,6 +22,7 @@ exports.addUser = (req,res)=>{
     const {username,sex,age,address,status,role,phone} = req.body
     let querySql = `select * from userTable where username='${username}'`
     db.query(querySql,(err,data)=>{
+        console.log(err);
         if(data.length>0){
             res.send({
                 code:400,
@@ -36,19 +37,57 @@ exports.addUser = (req,res)=>{
                 // console.log(data);
                 if(err){
                     res.send({
-                        status:400,
+                        code:400,
                         msg:err.message
                     })
                 }else if(data.affectedRows !==1){
                     res.send({
-                        status:400,msg:'数据写入失败'
+                        code:400,msg:'数据写入失败'
                     })
                 }else{
                     res.send({
-                        status:200,
+                        code:200,
                         msg:'新增成功'
                     })
                 }
+            })
+        }
+    })
+}
+// user 详情
+exports.getUserInfo = (req,res)=>{
+    console.log(req);
+    const {id}=req.query
+    let sql = `select * from userTable where id= '${id}'  `
+    db.query(sql,id,(err,data)=>{
+        console.log(data[0]);
+        res.send({
+            code:200,
+            msg:'查询成功',
+            data:data[0]
+        })
+    })
+}
+
+// 删除
+exports.delUser = (req,res)=>{
+    const {id} = req.body
+    let sql = `delete  from userTable where id = ${id}`
+    db.query(sql,id,(err,data)=>{
+        if(err){
+            res.send({
+                code:400,
+                msg:'数据删除失败'
+            })
+        }else if(data.affectedRows !== 1){
+            res.send({
+                code:400,
+                msg:'数据删除失败'
+            })
+        }else{
+            res.send({
+                code:200,
+                msg:'数据删除成功'
             })
         }
     })
