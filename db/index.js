@@ -1,9 +1,9 @@
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const db = mysql.createPool({
     host:'localhost',
     user:'root',
     password:'root',
-    database:'mydatabase',
+    database:'basketball',
     port:'3306'
 })
 
