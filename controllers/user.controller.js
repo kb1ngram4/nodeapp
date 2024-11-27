@@ -122,16 +122,20 @@ exports.delUser = (req, res) => {
 // get获取级联选择器树形结构
 const data = {
     parents: [
-        { id: '1', name: 'Parent 1', children: null },
-        { id: '2', name: 'Parent 2', children: null }
+        // { parentId: '0', id: '1', name: 'Parent 1', children: null },
+        // { parentId: '0', id: '2', name: 'Parent 2', children: null }
+        { id: 'all', name: '全部', children: [] }
     ],
     children: [
+        { parentId: 'all', id: '1', name: 'Parent 1', children: null },
+        { parentId: 'all', id: '2', name: 'Parent 2', children: null },
         { parentId: '1', id: '1-1', name: 'Child 1-1', children: null },
         { parentId: '1', id: '1-2', name: 'Child 1-2', children: null },
         { parentId: '1-1', id: '2-1', name: 'Child 2-1', children: null },
         { parentId: '2-1', id: '3-1', name: 'Child 3-1', children: null },
         { parentId: '2-1', id: '3-2', name: 'Child 3-2', children: null },
-        { parentId: '3-1', id: '4-1', name: 'Child 4-1', children: null },
+        { parentId: '3-1', id: '4-1', name: 'Child 4-1' },
+        { parentId: '2', id: '2-1-1', name: 'Child 2-1-1', children: null },
     ]
 };
 exports.getParentTree = (req, res) => {
