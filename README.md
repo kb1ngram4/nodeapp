@@ -21,3 +21,7 @@ multer：处理文件上传
     package.json
     index.js
 ```
+### 启动服务
+```
+nodemon
+```
